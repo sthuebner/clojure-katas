@@ -4,6 +4,7 @@
   (:use clojure.test
 	[clojure.string :only [split]]))
 
+;; TODO make this a multimethod/protocol
 (def int (fn [s] (if (= s "") 0 (Integer/parseInt s))))
 
 (deftest integer-parsing
