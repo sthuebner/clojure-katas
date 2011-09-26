@@ -7,16 +7,20 @@
 ** String Calculator
 
    - Problem Description: [[http://osherove.com/tdd-kata-1/][String Calculator]], Roy Osherove
-   - Solution: [[string_calculator.clj]]
+   - Solution: string_calculator.clj
 
 ** Bowling Game
 
    - Problem Description: [[http://codingdojo.org/cgi-bin/wiki.pl?KataBowling][Bowling Game]], CodingDojo Wiki
-   - Solution: [[bowling_game.clj]]
+   - Solution: bowling_game.clj
 
 *** TODO parse the given rolls first
 
 *** TODO Is there a way to use Continuations here?
+
+* TODOs
+
+  - [ ] provide a Leiningen project descriptor
 
 * Author
 
