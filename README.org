@@ -14,8 +14,6 @@
    - Problem Description: [[http://codingdojo.org/cgi-bin/wiki.pl?KataBowling][Bowling Game]], CodingDojo Wiki
    - Solution: bowling_game.clj
 
-*** TODO parse the given rolls first
-
 *** TODO Is there a way to use Continuations here?
 
 * TODOs
