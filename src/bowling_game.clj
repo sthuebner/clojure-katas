@@ -45,8 +45,8 @@
   (strike? [10 10]) => false)
 
 (defn spare? [frame]
-  (and (= 10 (apply + frame))
-       (not (strike? frame))))
+  (and (not (strike? frame))
+       (= 10 (apply + frame))))
 
 (facts "about spares"
   (spare? [5 3]) => false
