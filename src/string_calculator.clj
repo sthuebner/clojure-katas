@@ -1,6 +1,6 @@
 ;;;; see http://osherove.com/tdd-kata-1/
 
-(ns kata.string-calculator
+(ns string-calculator
   (:use clojure.test
 	[clojure.string :only [split]]))
 
