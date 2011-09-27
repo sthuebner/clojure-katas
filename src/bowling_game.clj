@@ -1,26 +1,30 @@
 (ns bowling-game
   (:use midje.sweet))
 
-(defn parse-roll [roll]
-  (let [roll (str roll)]
-    (condp re-matches roll
-      #"\d" (Integer/parseInt roll)
-      #"X" 10
-      0)))
+(defprotocol IntegerParser
+  (parse-int [this]))
 
-(facts "about parsing rolls"
-  (parse-roll \-) => 0
-  (parse-roll \1) => 1
-  (parse-roll \9) => 9
-  (parse-roll \X) => 10)
+(extend-protocol IntegerParser
+  Character
+  (parse-int [this]
+    (- (int this) 48))
+  String
+  (parse-int [this]
+    (Integer/parseInt this)))
+
+(facts "about parsing integer values"
+  (parse-int \1) => 1
+  (parse-int "1") => 1)
 
 (defn parse-game [game]
   (->> (re-seq #"\d/|-|\d|X" game)
        (map (fn [s]
-	      (if (re-matches #"\d/" s)
-		(let [first-roll (parse-roll (first s))]
-		  [first-roll (- 10 first-roll)])
-		(parse-roll s))))
+	      (condp re-matches s
+		#"-" 0
+		#"X" 10
+		#"\d/" (let [first-roll (parse-int (first s))]
+			 [first-roll (- 10 first-roll)])
+		(parse-int s))))
        flatten))
 
 (facts "about parsing games"
@@ -49,19 +53,11 @@
   (spare? [5 5]) => true
   (spare? [10]) => false)
 
-
 (defn next-frame [rolls]
-  (loop [frame []
-	 left-rolls rolls]
-    ;; FIXME this conditional is ugly
-    (cond
-     (not (seq left-rolls)) [frame []]
-     (= 1 (count left-rolls)) (recur (concat frame left-rolls) [])
-     (and (strike? frame) (= 2 (count left-rolls))) (recur (concat frame left-rolls) [])
-     (strike? frame) [frame left-rolls]
-     (= 2 (count frame)) [frame left-rolls]
-     :else (recur (conj frame (first left-rolls))
-		  (rest left-rolls)))))
+  (cond
+   (>= 3 (count rolls)) [rolls []]
+   (= 10 (first rolls)) [[(first rolls)] (rest rolls)]
+   :else [(take 2 rolls) (drop 2 rolls)]))
 
 (facts "about next-frame"
   (next-frame [0 0 0 0]) => [[0 0] [0 0]]
