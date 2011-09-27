@@ -18,7 +18,7 @@
 
 * TODOs
 
-  - [ ] provide a Leiningen project descriptor
+  - [X] provide a Leiningen project descriptor
 
 * Author
 
